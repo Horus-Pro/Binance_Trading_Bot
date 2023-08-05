@@ -1,0 +1,1 @@
+Trading bot with Bollinger Bands strategy algorithm on Telegram (Python)
