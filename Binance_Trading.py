@@ -17,7 +17,8 @@ api_key = "Put you key here"
 api_secret = "Put your secret here"
 
 
-bot_key = '5001354017:AAFQrufgMiv0r-DFPvh0Mpfj15D-v7RTt14'
+bot_key = 'Put Telegram bot Key Here to receive Notification'
+telegram_user = "Put you telegram user number here"
 
 def dateandtime():
     date_time = datetime.now() + timedelta(hours=0)
@@ -113,7 +114,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response = f"New buy order... {symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"☑️ {response}")
+                send_update(telegram_user, f"☑️ {response}")
             else:
                 if status >= 2:
                     response = f"STOP LOSS limit reached {status} "
@@ -124,7 +125,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response += f"{symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"⚠️ {response}")
+                send_update(telegram_user, f"⚠️ {response}")
     elif len(buy_orders) >= 1 and len(buy_orders) < max_orders:
         sql = "SELECT * FROM trading_bot WHERE symbol = %s AND status = %s ORDER BY id DESC LIMIT %s"
         val = (symbol, 1, 1)
@@ -144,7 +145,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response = f"New buy order... {symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"☑️ {response}")
+                send_update(telegram_user, f"☑️ {response}")
             else:
                 if status >= 2:
                     response = f"STOP LOSS limit reached {status} "
@@ -155,7 +156,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response += f"{symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"⚠️ {response}")
+                send_update(telegram_user, f"⚠️ {response}")
         elif float(current_price['price']) <= buy.dropna().iloc[-1] and datetime.now() > cooldown:
             if balance > (quantity * float(current_price['price'])) and status < 2:
                 print(f"{datetime.now()}    {cooldown}")
@@ -170,7 +171,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response = f"New buy order... {symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"☑️ {response}")
+                send_update(telegram_user, f"☑️ {response}")
             else:
                 if status >= 2:
                     response = f"STOP LOSS limit reached {status} "
@@ -181,7 +182,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response += f"{symbol}\n💳 Buy price: {current_price['price']}\n💎 Quantity: {quantity}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"⚠️ {response}")
+                send_update(telegram_user, f"⚠️ {response}")
 
     # Sell Order
     sql = "SELECT * FROM trading_bot WHERE symbol = %s AND status = %s"
@@ -206,7 +207,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response = f"Order [{x[0]}] {symbol} sold...\n💳 Buy price: {x[2]}\n💵 Sell price: {current_price['price']}\n💎 Quantity: {x[4]}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"✅ {response}")
+                send_update(telegram_user, f"✅ {response}")
             elif float(current_price['price']) < (float(x[2]) * 0.95):
                 logging.info(f"Sell Sell Sell... {current_price['price']} >= {sell.dropna().iloc[-1]}")
                 print(f"{dateandtime()} Sell Sell Sell... {current_price['price']} >= {sell.dropna().iloc[-1]}")
@@ -219,7 +220,7 @@ def buy_or_sell(balance, df, symbol, quantity):
                 response = f"[STOP LOSS] Order [{x[0]}] {symbol} sold...\n💳 Buy price: {x[2]}\n💵 Sell price: {current_price['price']}\n💎 Quantity: {x[4]}\n💰 Current Balance: {current_balance} USDT"
                 logging.info(f"{response}")
                 print(f"{dateandtime()} {response}")
-                send_update(597489330, f"❌ {response}")
+                send_update(telegram_user, f"❌ {response}")
                 config = configparser.ConfigParser()
                 config.read('Binance_Trading.ini')
                 config["DEFAULT"]['status'] = str(status + 1)
