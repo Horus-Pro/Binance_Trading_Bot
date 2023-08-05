@@ -86,9 +86,9 @@ def buy_or_sell(balance, df, symbol, quantity):
     logging.info(f"{symbol} Buy price set as {buy.dropna().iloc[-1]}")
     print(f"{dateandtime()} {symbol} Buy price set as {buy.dropna().iloc[-1]}")
     mydb = mysql.connector.connect(
-        host="160.153.131.153",
-        user="SamuraiCrypto",
-        password="#LvLC.$*ca0b",
+        host="Host Name",
+        user="Username",
+        password="Password",
         database="CryptoVerse_db"
     )
     mycursor = mydb.cursor()
